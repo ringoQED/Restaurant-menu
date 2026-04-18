@@ -1,0 +1,91 @@
+#root {
+  width: 100vw;
+  height: 100vh;
+}
+
+body {
+  margin: 0;
+}
+
+.booking-panel {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 50vw;
+  max-width: 380px;
+  background-color: rgba(159, 96, 2, 0.9);
+  padding: 20px;
+  border-radius: 12px;
+  color: #fff;
+  font-family: Arial, sans-serif;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 18px;
+}
+
+.booking-panel h2 {
+  margin: 0;
+  font-size: 24px;
+  text-align: center;
+}
+
+.booking-panel form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  width: 100%;
+}
+
+.booking-panel label {
+  display: flex;
+  flex-direction: column;
+  font-size: 16px;
+  gap: 8px;
+}
+
+.booking-panel input {
+  padding: 10px;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+}
+
+.booking-panel button {
+  padding: 12px;
+  background-color: #fff;
+  color: #000;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.booking-panel button:hover {
+  background-color: #ddd;
+}
+
+.booking-panel .button-group {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+}
+
+.booking-panel .button-group button[type="button"] {
+  background-color: #ccc;
+  color: #000;
+}
+
+.booking-panel .button-group button[type="button"]:hover {
+  background-color: #aaa;
+}
+
+.booking-message {
+  margin: 0;
+  font-size: 16px;
+  text-align: center;
+  color: #fff3b3;
+}
