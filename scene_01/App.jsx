@@ -7,6 +7,7 @@
 //          Updated: 20 Mar 2026
 //          Updated: 26 Mar 2026
 //          Updated: 03 Apr 2026
+//          Updated: 08 May 2026
 // 
 // 
 // ******************************************************
@@ -172,6 +173,15 @@ function CtrlMenu ({ setBackground }){
 function Box({ onCubeClick, onBookingClick }) {
   const meshRef = useRef();
   const textures = useLoader( TextureLoader, [img1, img2, img3, img4, img5, img6] );
+  const [hovered, setHovered] = useState(false);
+
+  // Sync the global body cursor with the hover state
+  useEffect(() => {
+    document.body.style.cursor = hovered ? 'pointer' : 'auto'
+    
+    // Cleanup to reset cursor if the component unmounts (no effect in this case since Box is always mounted, but good practice)
+    //return () => { document.body.style.cursor = 'auto' }
+  }, [hovered])
 
   return (
     <mesh ref={meshRef} 
@@ -187,6 +197,7 @@ function Box({ onCubeClick, onBookingClick }) {
 
       } else if (normal.x < -0.5) {
         console.log("Find Us clicked");
+        window.open('https://www.google.co.uk/maps/place/Eat+Tokyo+(Soho)/@51.5131066,-0.1365974,15.6z/data=!3m1!5s0x487604d2bdb90531:0xfe2bb5b59bd6eee4!4m6!3m5!1s0x487604d2ed0c6601:0xa3e0d243e40a8107!8m2!3d51.5137149!4d-0.130203!16s%2Fg%2F1hm5_znjh?entry=ttu&g_ep=EgoyMDI2MDUwMi4wIKXMDSoASAFQAw%3D%3D', '_blank');
       } else if (normal.y > 0.5) {
         console.log("Top face clicked");
       } else if (normal.y < -0.5) {
@@ -197,10 +208,11 @@ function Box({ onCubeClick, onBookingClick }) {
         console.log("Booking clicked");
         onBookingClick();
       }
-
-
-        //onCubeClick();
+  
       }}
+
+      onPointerOver={() => setHovered(true)} 
+      onPointerOut={() => setHovered(false)}
     >
 
       <boxGeometry args={[2.5, 2.5, 2.5]} />
