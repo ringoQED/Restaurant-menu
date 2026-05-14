@@ -2,12 +2,14 @@
 // 
 //         Restaurant website demo
 //    
-//          ringoQED, 22 Mar 2025
+//          Updated, 22 Mar 2025
 //          Updated: 16 Nov 2025
 //          Updated: 20 Mar 2026
 //          Updated: 26 Mar 2026
 //          Updated: 03 Apr 2026
 //          Updated: 08 May 2026
+//          Updated: 11 May 2026
+//          Updated: 14 May 2026
 // 
 // 
 // ******************************************************
@@ -238,10 +240,26 @@ function FoodMenu({ isVisible }) {
   const textureDessert = useRef(new THREE.TextureLoader().load( menu_dessert ));
   const textureDrink = useRef(new THREE.TextureLoader().load( menu_drink ));
 
+  const targetScale = new THREE.Vector3(1.0, 1.0, 1.0); // Target scale for the menu
+  const defaultScale = new THREE.Vector3(0.8, 0.8, 0.8); // Default scale for the menu
+
+  // Smoothly scale the menu up when it becomes visible
+  // Note: the menus do not shrink back now, it needs some kind of refactor the algorithm to make it works
+  useFrame((state, delta) => {
+    if (menu_starterRef.current) {
+      const scale = isVisible ? targetScale : defaultScale;
+      menu_mainRef.current.scale.lerp(scale, 0.1);
+      menu_starterRef.current.scale.lerp(scale, 0.1);
+      menu_dessertRef.current.scale.lerp(scale, 0.1);
+      menu_drinkRef.current.scale.lerp(scale, 0.1);
+    }
+  });
+  
+
   // Position the menus around the cube
   return (
     <Fragment>
-      <mesh ref={ menu_mainRef } position={[ 0, 0, 2.5 ]} visible={ isVisible } >
+      <mesh ref={ menu_mainRef } position={[ 0, 0, 2.5 ]} visible={ isVisible }>
         <planeGeometry args={[3, 3.5]} />
         <meshBasicMaterial
           map={ textureMain.current }
