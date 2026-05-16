@@ -8,6 +8,7 @@ body {
 }
 
 .booking-panel {
+  animation: myscale 0.2s ease-out;
   position: absolute;
   top: 50%;
   left: 50%;
@@ -24,6 +25,22 @@ body {
   flex-direction: column;
   align-items: center;
   gap: 18px;
+}
+
+@keyframes myscale {
+  0% {
+    transform: translate(-50%, -50%) scale(0.95);
+    opacity: 0;
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(1.05);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(1.00);
+    opacity: 1;
+  }
+  
 }
 
 .booking-panel h2 {
@@ -88,4 +105,90 @@ body {
   font-size: 16px;
   text-align: center;
   color: #fff3b3;
+}
+
+.about-panel {
+  animation: myscale 0.2s ease-out;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 60vw;
+  max-width: 500px;
+  background-color: rgba(159, 96, 2, 0.9);
+  padding: 30px;
+  border-radius: 12px;
+  color: #fff;
+  font-family: Arial, sans-serif;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  align-items: center;
+}
+
+.about-panel .about-content1 {
+  display: flex;
+  flex-direction: row;
+  gap: 30px;
+  align-items: center;
+}
+
+.about-panel .about-content2 {
+  display: flex;
+  flex-direction: row;
+  gap: 30px;
+  align-items: center;
+}
+
+.about-panel .about-content3 {
+  display: flex;
+  flex-direction: row;
+  gap: 30px;
+  align-items: center;
+}
+
+.about-panel #about-image1 {
+  border-radius: 10%;
+}
+
+.about-panel #about-image2 {
+  border-radius: 10%;
+}
+
+.about-panel #about-image3 {
+  border-radius: 10%;
+}
+
+@media (max-width: 600px) {
+  .about-panel {
+    position: fixed;
+    top: 0;
+    left: 5vw;
+    transform: none;
+    width: 100vw;
+    height: 100vh;
+    max-width: 90vw;
+    max-height: 100vh;
+    padding: 10px;
+    overflow-y: auto;
+    box-sizing: border-box;
+  }
+  .about-panel .about-content1,
+  .about-panel .about-content2,
+  .about-panel .about-content3 {
+    flex-direction: column;
+    gap: 10px;
+    align-items: center;
+  }
+  .about-panel img {
+    width: 90vw !important;
+    max-width: 250px;
+    height: auto !important;
+  }
+  .about-panel p {
+    max-width: 95vw;
+    font-size: 1rem;
+    text-align: center;
+  }
 }

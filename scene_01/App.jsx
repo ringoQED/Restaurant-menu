@@ -10,10 +10,11 @@
 //          Updated: 08 May 2026
 //          Updated: 11 May 2026
 //          Updated: 14 May 2026
+//          Updated: 15 May 2026
+//          Updated: 16 May 2026
 // 
 // 
 // ******************************************************
-
 import { Canvas, useThree, useFrame, useLoader, extend } from '@react-three/fiber';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js'
 import { useRef, useEffect, useState, Suspense } from 'react';
@@ -29,6 +30,9 @@ import img3 from './assets/images/food_03.jpg'; //dummy image for the cube, not 
 import img4 from './assets/images/food_04.jpg'; //dummy image for the cube, not used in the menu
 import img5 from './assets/images/about.jpg';
 import img6 from './assets/images/booking.png';
+import chef from './assets/images/chef_cooking.png';
+import Japanese_Ramen from './assets/images/Japanese_Ramen.png';
+import Roasted_Chicken from './assets/images/Roasted_Chicken.png';
 
 //Load the restaurant hdr images as background
 import restaurant1 from './assets/images/restaurant1.hdr';
@@ -172,7 +176,7 @@ function CtrlMenu ({ setBackground }){
 
 
 //Define the cube and show the food menu when cube is clicked
-function Box({ onCubeClick, onBookingClick }) {
+function Box({ onCubeClick, onBookingClick, onAboutClick }) {
   const meshRef = useRef();
   const textures = useLoader( TextureLoader, [img1, img2, img3, img4, img5, img6] );
   const [hovered, setHovered] = useState(false);
@@ -206,6 +210,7 @@ function Box({ onCubeClick, onBookingClick }) {
         console.log("Bottom face clicked");
       } else if (normal.z > 0.5) {
         console.log("About clicked");
+        onAboutClick();
       } else if (normal.z < -0.5) {
         console.log("Booking clicked");
         onBookingClick();
@@ -316,14 +321,15 @@ function App() {
   const [ isDrinkVisible, setIsDrinkVisible ] = useState( false );
 
   const [ isBookingVisible, setIsBookingVisible ] = useState( false );
+  const [ isAboutVisible, setIsAboutVisible ] = useState( false );
   const [ bookingDate, setBookingDate ] = useState('');
   const [ bookingTime, setBookingTime ] = useState('');
   const [ bookingPartySize, setBookingPartySize ] = useState(1);
   const [ bookingMessage, setBookingMessage ] = useState('');
 
   useEffect(() => {
-    setIsBlur(isBookingVisible || isMenuVisible ? 0.1 : 0);
-  }, [isBookingVisible, isMenuVisible]);
+    setIsBlur(isBookingVisible || isMenuVisible || isAboutVisible ? 0.1 : 0);
+  }, [isBookingVisible, isMenuVisible, isAboutVisible]);
 
   // Handle clicks on food models
   const handleSpagClick = () => {
@@ -382,6 +388,10 @@ function App() {
     setBookingMessage('');
   };
 
+  const handleAboutClick = () => {
+    setIsAboutVisible( prev => !prev );
+  };
+
   // Handle clicks on the cube
   const handleCubeClick = () => {
 
@@ -409,6 +419,7 @@ function App() {
     setIsDrinkVisible( false );
 
     setIsBookingVisible( false );
+    setIsAboutVisible( false );
   };
   
   return (
@@ -418,7 +429,7 @@ function App() {
           <SetCamera />
           <ambientLight />
           <pointLight position={[ 10, 10, 10 ]} />
-          <Box onCubeClick={ handleCubeClick } onBookingClick={ handleBookingClick } />
+          <Box onCubeClick={ handleCubeClick } onBookingClick={ handleBookingClick } onAboutClick={ handleAboutClick }/>
           <ModelSpag isSpagVisible={ isSpagVisible } onSpagClick={ handleSpagClick } />
           <ModelOyster isOysterVisible={ isOysterVisible } onOysterClick={ handleOysterClick } />
           <ModelDessert isDessertVisible={ isDessertVisible } onDessertClick={ handleDessertClick } />
@@ -460,6 +471,23 @@ function App() {
             </div>
           </form>
           {bookingMessage && <p className="booking-message">{bookingMessage}</p>}
+        </div>
+      )}
+      {isAboutVisible && (
+        <div className="about-panel">
+          <h2 id="about-title">About Us</h2>
+          <div className="about-content1">
+            <img id="about-image1" src={ chef } alt="Chef" width={ 200 } height={ 200 } />
+            <p>Welcome to The Food Land, where we serve the best dishes from around the world! Our chefs are passionate about creating delicious meals using fresh ingredients. Whether you're in the mood for a hearty main course, a light starter, a decadent dessert, or a refreshing drink, we have something for everyone. Come and experience our cozy atmosphere and exceptional service. We look forward to serving you!</p>
+          </div>
+          <div className="about-content2">
+            <p>At The Food Land, our menu is a passport to global flavors, and we take pride in presenting dishes that are not only delicious but visual masterpieces. From the deep, rich broths of our expertly crafted Japanese ramen—complete with meticulously seared chashu pork, a perfect onsen egg, and a hint of fiery spice—to countless other authentic specialties, every plate is prepared with a respect for tradition and a passion for modern taste.</p>
+            <img id="about-image2" src={ Japanese_Ramen } alt="Japanese Ramen" width={ 200 } height={ 200 } />
+          </div>
+          <div className="about-content3">
+            <img id="about-image3" src={ Roasted_Chicken } alt="Roasted Chicken" width={ 200 } height={ 200 } />
+            <p>Our roasted chicken is a customer favorite, marinated in a blend of herbs and spices, then slow-roasted to achieve a crispy skin and tender, juicy meat. Each dish is a celebration of culinary artistry, designed to delight your senses and transport you to the heart of global cuisine. Join us at The Food Land for an unforgettable dining experience that celebrates the art of food.</p>
+          </div>
         </div>
       )}
     </>
